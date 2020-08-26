@@ -1,0 +1,59 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'KeepOneNoteRunning'
+		'KeepOneNoteRunning.DLL'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+	%PROGID%.1 = s 'Keep OneNote Running Connect Class Object'
+	{
+		CLSID = s '{%CLSID%}'
+	}
+	%PROGID% = s 'Keep OneNote Running Connect Class Object'
+	{
+		CLSID = s '{%CLSID%}'
+		CurVer = s '%PROGID%.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove '{%CLSID%}' = s 'Keep OneNote Running Connect Class Object'
+		{
+			ProgID = s '%PROGID%.1'
+			VersionIndependentProgID = s '%PROGID%'
+			'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{%TYPELIB%}'
+		}
+	}
+}
+HKCU
+{
+	NoRemove Software
+	{
+		NoRemove Microsoft
+		{
+			NoRemove Office
+			{
+				NoRemove OneNote
+				{
+					NoRemove Addins
+					{
+						%PROGID%
+						{
+							val Description = s 'Keep OneNote Running COM Addin'
+							val FriendlyName = s 'Keep OneNote Running COM Addin'
+							val LoadBehavior = d 3
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
